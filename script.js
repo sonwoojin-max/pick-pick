@@ -23,12 +23,13 @@ document.addEventListener('DOMContentLoaded', function() {
     pixel.dataset.y = Math.floor(i / size);
     pixels.push(pixel);
 
+    // 삼성 예시 이미지 및 링크 적용, 이미지 관련 코드 제거
+    // 이미지 영역 투명화 코드 제거
     if (saved[i]) {
       pixel.style.backgroundColor = saved[i].color;
       pixel.innerHTML = `<span title="${saved[i].owner}">${saved[i].msg}</span>`;
       pixel.style.cursor = 'not-allowed';
     }
-
     pixel.addEventListener('mousedown', (e) => {
       if (saved[i]) return;
       isMouseDown = true;
@@ -92,7 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const topRight = minY * size + maxX + 1;
     const bottomLeft = maxY * size + minX + 1;
     const bottomRight = maxY * size + maxX + 1;
-    alert(`선택된 범위: ${topLeft}, ${topRight}, ${bottomLeft}, ${bottomRight}\n결제문의는 인스타: woozindyxw9, 카카오톡: your_kakao_id`);
+    const price = dragSelected.size * 1000;
+    alert(`선택된 범위: ${topLeft}, ${topRight}, ${bottomLeft}, ${bottomRight}\n총 가격: ${price.toLocaleString()}원\n결제문의는 인스타: woozindyxw9, 카카오톡: your_kakao_id`);
   };
 
   resetBtn.onclick = () => {
