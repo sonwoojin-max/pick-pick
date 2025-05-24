@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const topRight = minY * size + maxX + 1;
     const bottomLeft = maxY * size + minX + 1;
     const bottomRight = maxY * size + maxX + 1;
-    alert(`선택된 범위: ${topLeft}, ${topRight}, ${bottomLeft}, ${bottomRight}\n결제문의는 인스타: your_insta_id, 카카오톡: your_kakao_id`);
+    alert(`선택된 범위: ${topLeft}, ${topRight}, ${bottomLeft}, ${bottomRight}\n결제문의는 인스타: woozindyxw9, 카카오톡: your_kakao_id`);
   };
 
   resetBtn.onclick = () => {
