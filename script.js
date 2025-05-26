@@ -40,13 +40,45 @@ document.addEventListener('DOMContentLoaded', function() {
       dragSelected.add(pixel);
       e.preventDefault();
     });
+    // 모바일 터치 지원
+    pixel.addEventListener('touchstart', (e) => {
+      if (saved[i]) return;
+      isMouseDown = true;
+      const touch = e.touches[0];
+      dragStart = { x: parseInt(pixel.dataset.x), y: parseInt(pixel.dataset.y) };
+      dragEnd = null;
+      clearSelection();
+      pixel.classList.add('selected');
+      dragSelected.add(pixel);
+      e.preventDefault();
+    }, { passive: false });
     pixel.addEventListener('mouseenter', () => {
       if (isMouseDown && !saved[i]) {
         dragEnd = { x: parseInt(pixel.dataset.x), y: parseInt(pixel.dataset.y) };
         updateSquareSelection();
       }
     });
+    // 모바일 터치 이동 지원
+    pixel.addEventListener('touchmove', (e) => {
+      if (!isMouseDown) return;
+      const touch = e.touches[0];
+      const target = document.elementFromPoint(touch.clientX, touch.clientY);
+      if (target && target.classList.contains('pixel') && !saved[target.dataset.index]) {
+        dragEnd = { x: parseInt(target.dataset.x), y: parseInt(target.dataset.y) };
+        updateSquareSelection();
+      }
+      e.preventDefault();
+    }, { passive: false });
     pixel.addEventListener('mouseup', () => {
+      if (isMouseDown) {
+        isMouseDown = false;
+        if (dragSelected.size > 0) {
+          actionBtns.style.display = '';
+        }
+      }
+    });
+    // 모바일 터치 끝 지원
+    pixel.addEventListener('touchend', () => {
       if (isMouseDown) {
         isMouseDown = false;
         if (dragSelected.size > 0) {
@@ -94,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const bottomLeft = maxY * size + minX + 1;
     const bottomRight = maxY * size + maxX + 1;
     const price = dragSelected.size * 1000;
-    alert(`선택된 범위: ${topLeft}, ${topRight}, ${bottomLeft}, ${bottomRight}\n총 가격: ${price.toLocaleString()}원\n결제문의는 인스타: woozindyxw9, 카카오톡: your_kakao_id`);
+    alert(`선택된 범위: ${topLeft}, ${topRight}, ${bottomLeft}, ${bottomRight}\n총 가격: ${price.toLocaleString()}원\n결제문의는 인스타: pick_pick_00`);
   };
 
   resetBtn.onclick = () => {
