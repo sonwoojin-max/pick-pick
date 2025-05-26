@@ -163,4 +163,37 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   }
+
+  // 방문자수 카운트 (localStorage 기반, 단순 방문자수)
+  const visitKey = 'pickpix_visit_count';
+  let visitCount = parseInt(localStorage.getItem(visitKey) || '0', 10) + 1;
+  localStorage.setItem(visitKey, visitCount);
+
+  // 오늘 날짜별 방문자수 카운트
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const todayKey = `pickpix_visit_${yyyy}${mm}${dd}`;
+  let todayCount = parseInt(localStorage.getItem(todayKey) || '0', 10) + 1;
+  localStorage.setItem(todayKey, todayCount);
+
+  // 방문자수 표시 엘리먼트 추가 (오른쪽 위 고정)
+  let visitDiv = document.getElementById('visitCount');
+  if (!visitDiv) {
+    visitDiv = document.createElement('div');
+    visitDiv.id = 'visitCount';
+    visitDiv.style.position = 'fixed';
+    visitDiv.style.top = '10px';
+    visitDiv.style.right = '16px';
+    visitDiv.style.background = 'rgba(255,255,255,0.9)';
+    visitDiv.style.border = '1px solid #ddd';
+    visitDiv.style.borderRadius = '8px';
+    visitDiv.style.padding = '6px 16px';
+    visitDiv.style.fontSize = '15px';
+    visitDiv.style.zIndex = 1000;
+    visitDiv.style.boxShadow = '0 2px 8px rgba(0,0,0,0.07)';
+    document.body.appendChild(visitDiv);
+  }
+  visitDiv.innerHTML = `<b>오늘 방문자수</b>: ${todayCount.toLocaleString()}<br><b>누적 방문자수</b>: ${visitCount.toLocaleString()}<br><span style='font-size:12px;color:#888;'>(이 브라우저 기준)</span>`;
 });
